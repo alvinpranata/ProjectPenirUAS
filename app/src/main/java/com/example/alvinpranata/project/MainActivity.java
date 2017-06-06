@@ -2,16 +2,20 @@ package com.example.alvinpranata.project;
 
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
     public ViewPager vp;
     public TabLayout tabs;
     public NavigationView nv;
+    public DrawerLayout dl;
 
 
 
@@ -21,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         vp = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(vp);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
         tabs = (TabLayout) findViewById(R.id.tabs);
@@ -81,9 +87,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        dl = (DrawerLayout) findViewById(R.id.drawer);
+
+
+
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            dl.openDrawer(GravityCompat.START);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
     private void setupViewPager(ViewPager vp) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new CardFunnyFragment());
