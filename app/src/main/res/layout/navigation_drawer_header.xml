@@ -3,20 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txtJudul4Laugh"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="123dp"
-        android:layout_marginStart="123dp"
-        android:layout_marginTop="17dp"
-        android:text="4 Laugh"
-        android:textAlignment="center"
-        android:textColor="@android:color/background_light"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/nav_drawer" />
 
+    <TextView
+        android:id="@+id/txtUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="11dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginStart="17dp"
+        android:text="user"
+        android:textAppearance="@android:style/TextAppearance.Material.Display1"
+        android:textColor="@android:color/background_light"
+        android:textStyle="normal|bold" />
 </RelativeLayout>

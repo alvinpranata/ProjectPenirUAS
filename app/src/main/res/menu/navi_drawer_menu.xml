@@ -2,28 +2,22 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menuHome"
-        android:icon="@drawable/home"
-        android:title="Home" />
-    <item
-        android:id="@+id/menuLogin"
-        android:icon="@drawable/person"
-        android:title="Login" />
-    <item
-        android:id="@+id/menuRegister"
-        android:icon="@drawable/signup"
-        android:title="Register" />
-    <item />
-    <item />
-    <item />
-    <item />
-    <item />
-    <item />
-    <item />
-    <item />
-    <item
-        android:id="@+id/menuLogout"
-        android:icon="@drawable/exit"
-        android:title="Logout" />
+    <group >
+        <item
+            android:id="@+id/itemHome"
+            android:icon="@drawable/home"
+            android:title="Home" />
+        <item
+            android:id="@+id/itemMeme"
+            android:icon="@drawable/meme"
+            android:title="Meme" />
+        <item
+            android:id="@+id/itemAnimal"
+            android:icon="@drawable/animal"
+            android:title="Animal" />
+        <item
+            android:id="@+id/itemMovie"
+            android:icon="@drawable/movie"
+            android:title="Movie TV" />
+    </group>
 </menu>
