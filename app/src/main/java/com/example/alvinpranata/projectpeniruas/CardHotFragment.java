@@ -16,18 +16,18 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class CardHotFragment extends Fragment {
-   /* public static RecyclerView recyclerView;
-    public static RecycleAdapter recycleAdapter;*/
+    public static RecyclerView recyclerView;
+    public static RecycleAdapter recycleAdapter;
 
     //Constructor sebagai pengganti consttucotr berparameter karena fragment hanya boleh mempunyai satu constructor
 
-   /* public static CardHotFragment newInstance(ArrayList<Product> products){
+    public static CardHotFragment newInstance(ArrayList<Post> posts){
         CardHotFragment cf = new CardHotFragment();
-        recycleAdapter = new RecycleAdapter(products);
+        recycleAdapter = new RecycleAdapter(posts);
         return cf;
-    }*/
+    }
 
-    /*public CardHotFragment() {
+    public CardHotFragment() {
         // Required empty public constructor
     }
 
@@ -47,5 +47,5 @@ public class CardHotFragment extends Fragment {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_card_content, container, false);
     }
-*/
+
 }

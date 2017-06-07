@@ -5,34 +5,36 @@ package com.example.alvinpranata.projectpeniruas;
  */
 
 public class Post {
-    private String nama;
     private int id;
     private String title;
-    private String tanggal;
+    private String timestamp;
     private String gambar;
-    private int kategoriId;
+    private String kategori;
+    private int jumlah_like;
 
-    public Post(String nama, int id, String title, String tanggal, String gambar, int kategoriId) {
-        this.nama = nama;
+    public Post(int id, String title, String timestamp, String gambar, String kategori,int jumlah_like) {
         this.id = id;
         this.title = title;
-        this.tanggal = tanggal;
+        this.timestamp = timestamp;
         this.gambar = gambar;
-        this.kategoriId = kategoriId;
-    }
-    public int getKategoriId() {
-        return kategoriId;
+        this.kategori = kategori;
+        this.jumlah_like = jumlah_like;
     }
 
-    public void setKategoriId(int kategoriId) {
-        this.kategoriId = kategoriId;
-    }
-    public String getNama() {
-        return nama;
+    public int getJumlah_like() {
+        return jumlah_like;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public void setJumlah_like(int jumlah_like) {
+        this.jumlah_like = jumlah_like;
+    }
+
+    public String getKategori() {
+        return kategori;
+    }
+
+    public void setKategoriId(String kategori) {
+        this.kategori = kategori;
     }
 
     public int getId() {
@@ -52,11 +54,11 @@ public class Post {
     }
 
     public String getTanggal() {
-        return tanggal;
+        return timestamp;
     }
 
     public void setTanggal(String tanggal) {
-        this.tanggal = tanggal;
+        this.timestamp = tanggal;
     }
 
     public String getGambar() {
@@ -67,9 +69,16 @@ public class Post {
         this.gambar = gambar;
     }
 
-    /*@Override
-    public String toString() {
-        return "ID : "+id+"\nNama : "+nama+"\nHarga : "+harga+"\nDeskripsi : "+deskripsi;
-    }*/
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", timestamp='" + timestamp + '\'' +
+                ", gambar='" + gambar + '\'' +
+                ", kategori='" + kategori + '\'' +
+                ", jumlah_like=" + jumlah_like +
+                '}';
+    }
 }

@@ -11,7 +11,7 @@ public class Login {
     private int id;
     private boolean isLogin;
 
-    public Login(String username, String nama, String password, int id, boolean isLogin) {
+    public Login(int id, String username, String nama, String password, boolean isLogin) {
         this.username = username;
         this.nama = nama;
         this.password = password;
@@ -58,5 +58,16 @@ public class Login {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Login{" +
+                "username='" + username + '\'' +
+                ", nama='" + nama + '\'' +
+                ", password='" + password + '\'' +
+                ", id=" + id +
+                ", isLogin=" + isLogin +
+                '}';
     }
 }

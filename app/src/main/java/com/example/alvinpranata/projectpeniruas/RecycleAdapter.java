@@ -18,12 +18,11 @@ import java.util.List;
  * Created by tc4b03 on 5/9/2017.
  */
 
-/*
 public class RecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    List<Product> productList;
+    List<Post> postList;
 
-    public RecycleAdapter(List<Product> productList){
-        this.productList = productList;
+    public RecycleAdapter(List<Post> postList){
+        this.postList = postList;
     }
 
     @Override
@@ -36,21 +35,19 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TextView textName = (TextView) holder.itemView.findViewById(R.id.txtTittle);
-        TextView textHarga = (TextView) holder.itemView.findViewById(R.id.txtHarga);
-        TextView textDesk = (TextView) holder.itemView.findViewById(R.id.txtDesk);
-        ImageView imageView = (ImageView) holder.itemView.findViewById(R.id.imageFoto);
+        TextView textTitle = (TextView) holder.itemView.findViewById(R.id.txtTittle);
+        ImageView imageLike = (ImageView) holder.itemView.findViewById(R.id.imageLike);
+        TextView jumlahLike = (TextView) holder.itemView.findViewById(R.id.textJumlahLike);
+        ImageView imageFoto = (ImageView) holder.itemView.findViewById(R.id.imageFoto);
 
-        textName.setText(productList.get(position).getNama());
-        textHarga.setText("Rp. "+productList.get(position).getHarga());
-        textDesk.setText(productList.get(position).getDeskripsi());
-
+        textTitle.setText(postList.get(position).getTitle());
+        jumlahLike.setText(""+postList.get(position).getJumlah_like());
         URL url = null;
 
         try {
-            url = new URL("http://penir.jitusolution.com/img/"+productList.get(position).getId()+".jpg");
+            url = new URL("http://103.52.146.34/penir/penir06/"+postList.get(position).getKategori()+"/"+postList.get(position).getGambar());
             Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            imageView.setImageBitmap(bitmap);
+            imageFoto.setImageBitmap(bitmap);
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -61,7 +58,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        return postList.size();
     }
 
     @Override
@@ -69,4 +66,3 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         super.onAttachedToRecyclerView(recyclerView);
     }
 }
-*/

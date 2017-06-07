@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -15,11 +14,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Setup view pager
         viewPager = ((ViewPager) findViewById(R.id.viewpager));
-        setupViewPager();
+
         //Sinkronisasi tab dengan view pager
         tabLayout = ((TabLayout) findViewById(R.id.tabs));
 
@@ -101,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Setup ReadData
+        ReadDataFresh readData = new ReadDataFresh(this);
+        readData.execute("http://103.52.146.34/penir/penir06/manage.php?cmd=fresh");
+        ReadDataHot readData2 = new ReadDataHot(this);
+        readData2.execute("http://103.52.146.34/penir/penir06/manage.php?cmd=hot");
+        mainActivity=this;
+        this.setTitle("Home");
+
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -119,16 +128,28 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
                     case R.id.itemHome:
-                        navigationView.getMenu().getItem(0).setChecked(true);
+                        /*navigationView.getMenu().getItem(0).setChecked(true);*/
                         break;
                     case R.id.itemMeme:
-
+                        ReadDataFresh readDataMeme = new ReadDataFresh(mainActivity);
+                        ReadDataHot readDataMeme2 = new ReadDataHot(mainActivity);
+                        readDataMeme.execute("http://103.52.146.34/penir/penir06/manage.php?cmd=freshKategori&id=2");
+                        readDataMeme2.execute("http://103.52.146.34/penir/penir06/manage.php?cmd=hotKategori&id=2");
+                        mainActivity.setTitle("Meme");
                         break;
                     case R.id.itemAnimal:
-
+                        ReadDataFresh readDataAnimal = new ReadDataFresh(mainActivity);
+                        ReadDataHot readDataAnimal2 = new ReadDataHot(mainActivity);
+                        readDataAnimal.execute("http://103.52.146.34/penir/penir06/manage.php?cmd=freshKategori&id=1");
+                        readDataAnimal2.execute("http://103.52.146.34/penir/penir06/manage.php?cmd=hotKategori&id=1");
+                        mainActivity.setTitle("Animal");
                         break;
                     case R.id.itemMovie:
-
+                        ReadDataFresh readDataMovie = new ReadDataFresh(mainActivity);
+                        ReadDataHot readDataMovie2 = new ReadDataHot(mainActivity);
+                        readDataMovie.execute("http://103.52.146.34/penir/penir06/manage.php?cmd=freshKategori&id=3");
+                        readDataMovie2.execute("http://103.52.146.34/penir/penir06/manage.php?cmd=hotKategori&id=3");
+                        mainActivity.setTitle("Movie");
                         break;
                     default:
                         break;
@@ -153,25 +174,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        //Setup ReadData
-        /*ReadData readData = new ReadData(this);
-        readData.execute("http://penir.jitusolution.com");
-        mainActivity=this;
-        this.setTitle(null);*/
 
-        //coba database
-        /*ProductHelper helper = new ProductHelper(getApplicationContext());
-        helper.getWritableDatabase();
 
-        //tambahkan data
-        //helper.addNewProduct("Sandal jepit","LALLALLALALLALA",50000);
-        //helper.addNewProduct("Sandal Sepatu","LALLALLALALLALA",75000);
-        //helper.addNewProduct("Sandal Bekas","LALLALLALALLALA",15000);
-
-        ArrayList<Product> arrayListProducts = helper.selectProduct("price<=15000");
-        for(Product p:arrayListProducts){
-            Log.d("cobaTampil", p.toString());
-        }*/
     }
 
     @Override
@@ -190,13 +194,14 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     public static Adapter adapter;
-    public static FragmentManager fragmentManager;
     private void setupViewPager(){
         //Buat adapter
 
         adapter = new Adapter(getSupportFragmentManager());
         CardHotFragment cardContent = new CardHotFragment();
-        //cardContent.newInstance(products);
+        CardFreshFragment cardFresh = new CardFreshFragment();
+        cardFresh.newInstance(freshs);
+        cardContent.newInstance(hots);
 
         //Tambahkan semua fragment yang dibutuhkan
         adapter.addFragment(cardContent);
@@ -206,40 +211,59 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-   /* public static ArrayList<Login> products;
+    public static ArrayList<Post> freshs;
+    public static ArrayList<Post> hots;
     public static  MainActivity mainActivity=null;
-    public static void readDataFinish(Context context, String result){
-        //Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+    public static void readDataFinishFresh(Context context, String result){
         try {
             JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("product");
-            products = new ArrayList<>();
-            ProductHelper helper = new ProductHelper(context);
-            helper.getWritableDatabase();
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            freshs = new ArrayList<>();
             //iterasi sebanytak jumlah JSONObject pada JSonArray
             for(int i=0; i<jsonArray.length();i++){
-                JSONObject product = jsonArray.getJSONObject(i);
-                String nama = product.getString("nama");
-                int id = product.getInt("id");
-                int harga = product.getInt("harga");
-                String desc = product.getString("deskripsi");
-                products.add(new Product(nama,id,harga,desc));
-                //coba database
-
-
-                //helper.addNewProduct(nama,desc,harga);
+                JSONObject user = jsonArray.getJSONObject(i);
+                String title = user.getString("title");
+                int id = user.getInt("id");
+                String tanggal = user.getString("tanggal");
+                String gambar = user.getString("gambar");
+                String kategori = user.getString("kategori");
+                int like = user.getInt("like");
+                freshs.add(new Post(id,title,tanggal,gambar,kategori,like));
             }
-
-            ArrayList<Product> arrayListProducts = helper.selectAllProducts();
-            for(Product p:arrayListProducts){
-                Log.d("cobaTampilSemua", p.toString());
+            for (Post fresh : freshs) {
+                Log.d("fresh", fresh.toString());
             }
             mainActivity.setupViewPager();
-            System.out.println(products);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-    }*/
+    }
+    public static void readDataFinishHot(Context context, String result){
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            hots = new ArrayList<>();
+            //iterasi sebanytak jumlah JSONObject pada JSonArray
+            for(int i=0; i<jsonArray.length();i++){
+                JSONObject user = jsonArray.getJSONObject(i);
+                String title = user.getString("title");
+                int id = user.getInt("id");
+                String tanggal = user.getString("tanggal");
+                String gambar = user.getString("gambar");
+                String kategori = user.getString("kategori");
+                int like = user.getInt("like");
+                hots.add(new Post(id,title,tanggal,gambar,kategori,like));
+            }
+            for (Post hot : hots) {
+                Log.d("hot", hot.toString());
+            }
+            mainActivity.setupViewPager();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }

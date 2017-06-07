@@ -14,18 +14,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by andre on 5/1/2017.
+ * Created by AlvinPranata on 07/06/2017.
  */
 
-public class ReadData extends AsyncTask<String, String, String> {
+public class ReadDataFresh extends AsyncTask<String, String, String> {
     private ProgressDialog progressDialog;
     InputStream inputStream = null;
     String result = "";
-    LoginActivity la;
+    MainActivity ma;
 
-    public ReadData(LoginActivity la) {
-        progressDialog = new ProgressDialog(la);
-        this.la = la;
+    public ReadDataFresh(MainActivity ma) {
+        progressDialog = new ProgressDialog(ma);
+        this.ma = ma;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ReadData extends AsyncTask<String, String, String> {
         progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                ReadData.this.cancel(true);
+                ReadDataFresh.this.cancel(true);
             }
         });
     }
@@ -64,10 +64,10 @@ public class ReadData extends AsyncTask<String, String, String> {
             return buffer.toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();
-          //  ma.readDataFinish(ma.getApplicationContext(), "Result" +  e.getMessage().toString());
+            //  ma.readDataFinish(ma.getApplicationContext(), "Result" +  e.getMessage().toString());
         } catch (IOException e) {
             e.printStackTrace();
-           // ma.readDataFinish(ma.getApplicationContext(), "Result" +  e.getMessage().toString());
+            // ma.readDataFinish(ma.getApplicationContext(), "Result" +  e.getMessage().toString());
         } finally {
             if (connection != null) {
                 connection.disconnect();
@@ -90,7 +90,7 @@ public class ReadData extends AsyncTask<String, String, String> {
             progressDialog.dismiss();
         }
 
-       la.readDataFinish(la.getApplicationContext(), result);
+        ma.readDataFinishFresh(ma.getApplicationContext(), result);
 //       return result;
     }
 }
