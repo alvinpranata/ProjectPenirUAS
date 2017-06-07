@@ -39,8 +39,10 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView imageLike = (ImageView) holder.itemView.findViewById(R.id.imageLike);
         TextView jumlahLike = (TextView) holder.itemView.findViewById(R.id.textJumlahLike);
         ImageView imageFoto = (ImageView) holder.itemView.findViewById(R.id.imageFoto);
+        TextView textTanggal = (TextView) holder.itemView.findViewById(R.id.textTanggal);
 
-        textTitle.setText(postList.get(position).getTitle());
+        textTitle.setText(postList.get(position).getTitle().toString());
+        textTanggal.setText(postList.get(position).getTanggal().toString());
         jumlahLike.setText(""+postList.get(position).getJumlah_like());
         URL url = null;
 
